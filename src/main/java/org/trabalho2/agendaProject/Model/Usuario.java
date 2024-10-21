@@ -15,7 +15,7 @@ public class Usuario {
     @GeneratedValue
     private Integer id;
 
-    private String usuario;
+    private String email;
 
     private String senha;
 
@@ -33,12 +33,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {
