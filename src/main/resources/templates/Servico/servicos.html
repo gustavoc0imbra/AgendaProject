@@ -5,41 +5,30 @@
 <body>
 <div th:replace="MenuLayout/menulayout.html :: menu"></div>
 <div class="container d-flex bg-primary-subtle flex-column my-5">
-    <a class="btn btn-primary justify-end w-25 my-2" th:href="@{/cliente}">Adicionar Cliente</a>
+    <a class="btn btn-primary justify-end w-25 my-2" th:href="@{/servico}">Adicionar Serviço</a>
     <table class="table table-hover my-2">
         <thead>
         <tr class="table-dark">
             <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Telefone</th>
-            <th scope="col">Email</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Valor</th>
             <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="cliente : ${clientes}">
-            <th scope="row" th:text="${cliente.id}"></th>
-            <td th:text="${cliente.nome}"></td>
-            <td th:text="${cliente.telefone}"></td>
-            <td th:text="${cliente.email}"></td>
+        <tr th:each="servico : ${servicos}">
+            <th scope="row" th:text="${servico.id}"></th>
+            <td th:text="${servico.nome}"></td>
+            <td th:text="${#numbers.formatDecimal(servico.valor, 2, 2)}"></td>
             <td class="d-flex gap-2 p-2">
-                <a class="btn btn-warning" th:href="@{/cliente/{id}(id=${cliente.id})}">Editar</a>
-                <a class="btn btn-danger" th:href="@{/clienteDel/{id}(id=${cliente.id})}">Excluir</a>
+                <a class="btn btn-warning" th:href="@{/servico/{id}(id=${servico.id})}">Editar</a>
+                <a class="btn btn-danger" th:href="@{/servicoDel/{id}(id=${servico.id})}">Excluir</a>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-
 <div th:replace="MenuLayout/menulayout :: rodape"></div>
-
-<script>
-    function confirmDelete(event) {
-        if(!confirm("Deseja realmente deletar este funcionário?")) {
-            event.preventDefault();
-        }
-    }
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

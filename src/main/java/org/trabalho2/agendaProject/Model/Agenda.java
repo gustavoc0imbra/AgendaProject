@@ -20,7 +20,11 @@ public class Agenda {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date data;
 
+    @OneToOne
     private Cliente cliente;
+
+    @OneToOne
+    private Servico servico;
 
     public Integer getId() {
         return id;
@@ -52,5 +56,14 @@ public class Agenda {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Servico getServico()
+    {
+        return servico;
+    }
+
+    public void setServico(Servico servico) {
+        this.servico = servico;
     }
 }

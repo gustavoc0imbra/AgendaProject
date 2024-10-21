@@ -18,7 +18,7 @@ public class ClienteService {
     }
 
     public Cliente add(Cliente cliente) {
-        return clienteRepository.save(cliente);
+        return clienteRepository.saveAndFlush(cliente);
     }
 
     public Optional<Cliente> findById(Integer id) {

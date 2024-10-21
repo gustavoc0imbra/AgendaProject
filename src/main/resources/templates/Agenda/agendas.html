@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="MenuLayout/menulayout.html :: head">
+</head>
+<body>
+<div th:replace="MenuLayout/menulayout.html :: menu"></div>
+<div class="container d-flex bg-primary-subtle flex-column my-5">
+    <a class="btn btn-primary justify-end w-25 my-2" th:href="@{/agenda}">Adicionar Agenda</a>
+    <table class="table table-hover my-2">
+        <thead>
+        <tr class="table-dark">
+            <th scope="col">#</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Data</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Serviço</th>
+            <th scope="col">Valor Serviço</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="agenda : ${agendas}">
+            <th scope="row" th:text="${agenda.id}"></th>
+            <td th:text="${agenda.descricao}"></td>
+            <td th:text="${#dates.format(agenda.data, 'dd/mm/yyyy')}"></td>
+            <td th:text="${agenda.cliente.nome}"></td>
+            <td th:text="${agenda.servico.nome}"></td>
+            <td th:text="${#numbers.formatDecimal(agenda.servico.valor, 2, 2)}"></td>
+            <td class="d-flex gap-2 p-2">
+                <a class="btn btn-warning" th:href="@{/agenda/{id}(id=${agenda.id})}">Editar</a>
+                <a class="btn btn-danger" th:href="@{/agendaDel/{id}(id=${agenda.id})}">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="MenuLayout/menulayout :: rodape"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

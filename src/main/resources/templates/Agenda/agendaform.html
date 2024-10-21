@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="MenuLayout/menulayout.html :: head">
+</head>
+<body>
+<div th:replace="MenuLayout/menulayout.html :: menu"></div>
+
+<div class="container">
+    <form class="my-2 p-5 bg-primary-subtle text-primary-emphasis" th:object="${agenda}" th:action="@{/agenda}" method="POST">
+        <div class="mb-3">
+            <label for="descrAgenda" class="form-label">Descrição:</label>
+            <input type="text" class="form-control" id="descrAgenda" th:field="*{descricao}">
+        </div>
+        <div class="mb-3">
+            <label for="dataAgenda" class="form-label">Data:</label>
+            <input type="date" class="form-control" id="dataAgenda" th:field="*{data}">
+        </div>
+        <div class="mb-3">
+            <label for="cliAgenda" class="form-label">Cliente:</label>
+            <select class="form-select" th:field="*{cliente}" id="cliAgenda">
+                <option value="">Selecione um cliente.</option>
+                <option th:each="cliente : ${clientes}" th:text="${cliente.nome}" th:value="${cliente.id}">
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="servicoAgenda" class="form-label">Serviço:</label>
+            <select class="form-select" th:field="*{servico}" id="servicoAgenda">
+                <option value="">Selecione um serviço.</option>
+                <option th:each="servico : ${servicos}" th:text="${servico.nome}" th:value="${servico.id}">
+                </option>
+            </select>
+        </div>
+        <div class="w-100 d-flex justify-content-end gap-2">
+            <button type="reset" class="btn btn-danger">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
+</div>
+
+<div th:replace="MenuLayout/menulayout.html :: rodape"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

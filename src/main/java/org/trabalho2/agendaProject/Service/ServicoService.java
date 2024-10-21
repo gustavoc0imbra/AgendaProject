@@ -18,8 +18,9 @@ public class ServicoService {
     {
         return servicoRepository.findAll();
     }
-    public Servico salvarServico(Servico servico) {
-        return servicoRepository.save(servico);
+    public Servico salvarServico(Servico servico)
+    {
+        return servicoRepository.saveAndFlush(servico);
     }
 
     public void deletarServico(Integer id) {

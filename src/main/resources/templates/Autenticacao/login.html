@@ -11,12 +11,12 @@
 <div class="container d-flex flex-column my-5">
     <form class="bg-dark p-5" th:object="${usuario}" th:action="@{/login}" method="POST">
         <div class="mb-3">
-            <label for="usuario" class="form-label text-light">Usuário:</label>
-            <input type="text" id="usuario" class="form-control" placeholder="Insira o usuario" th:field="*{email}">
+            <label for="user-inpt" class="form-label text-light">Usuário:</label>
+            <input type="text" id="user-inpt" class="form-control" placeholder="Insira o usuario" th:field="*{email}">
         </div>
         <div class="mb-3">
-            <label for="senha" class="form-label text-light">Senha:</label>
-            <input type="text" id="senha" class="form-control" placeholder="Insira a senha">
+            <label for="senha-inpt" class="form-label text-light">Senha:</label>
+            <input type="text" id="senha-inpt" class="form-control" placeholder="Insira a senha" th:field="*{senha}">
         </div>
         <div class="w-100 justify-content-end d-flex gap-2">
             <button type="reset" class="btn btn-danger">Cancelar</button>
