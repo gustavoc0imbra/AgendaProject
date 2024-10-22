@@ -47,6 +47,16 @@ public class ClienteController {
         return findAll();
     }
 
+    @GetMapping("/cliente/enderecos/{id}")
+    public ModelAndView enderecos(@PathVariable("id") Integer id)
+    {
+        ModelAndView mv = new ModelAndView("Cliente/clienteendereco");
+
+        mv.addObject("cliente", clienteService.findById(id).get());
+
+        return mv;
+    }
+
     @PostMapping("/cliente")
     public ModelAndView save(Cliente cliente, BindingResult result)
     {

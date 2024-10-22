@@ -23,6 +23,7 @@
             <td th:text="${cliente.telefone}"></td>
             <td th:text="${cliente.email}"></td>
             <td class="d-flex gap-2 p-2">
+                <a class="btn btn-success" th:href="@{/cliente/enderecos/{id}(id=${cliente.id})}">Endereços</a>
                 <a class="btn btn-warning" th:href="@{/cliente/{id}(id=${cliente.id})}">Editar</a>
                 <a class="btn btn-danger" th:href="@{/clienteDel/{id}(id=${cliente.id})}">Excluir</a>
             </td>
@@ -35,7 +36,7 @@
 
 <script>
     function confirmDelete(event) {
-        if(!confirm("Deseja realmente deletar este funcionário?")) {
+        if(!confirm("Deseja realmente deletar este cliente?")) {
             event.preventDefault();
         }
     }

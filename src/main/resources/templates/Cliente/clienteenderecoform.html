@@ -6,25 +6,14 @@
 <div th:replace="MenuLayout/menulayout.html :: menu"></div>
 
 <div class="container">
-    <form class="my-2 p-5 bg-primary-subtle text-primary-emphasis" th:object="${cliente}" th:action="@{/cliente}" method="POST">
-        <div class="mb-3">
-            <label for="nomeCli" class="form-label">Nome:</label>
-            <input type="text" class="form-control" id="nomeCli" th:field="*{nome}">
-        </div>
-        <div class="mb-3">
-            <label for="telefoneCli" class="form-label">Telefone</label>
-            <input type="text" class="form-control" id="telefoneCli" th:field="*{telefone}">
-        </div>
-        <div class="mb-3">
-            <label for="emailCli" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="emailCli" th:field="*{email}">
-        </div>
-        <!--<div class="mb-3 row g-3 my-3">
+    <form class="my-2 p-5 bg-primary-subtle text-primary-emphasis" th:object="${endereco}" th:action="@{/cliente/endereco}" method="POST">
+        <input type="text" class="d-hidden" th:value="${cliente.id}">
+        <div class="mb-3 row g-3 my-3">
             <label class="form-label">Endereço:</label>
 
             <div class="col-2">
                 <label for="cepCli" class="form-label">C.E.P:</label>
-                <input type="number" class="form-control" id="cepCli" th:field="*{enderecos}">
+                <input type="number" class="form-control" id="cepCli" th:field="*{endereco}">
             </div>
             <div class="col-1">
                 <label for="ufCli" class="form-label">UF:</label>
@@ -47,7 +36,7 @@
                 <input type="text" class="form-control" id="ruaCli">
             </div>
 
-        </div>-->
+        </div>
         <div class="w-100 d-flex justify-content-end gap-2">
             <button type="reset" class="btn btn-danger">Cancelar</button>
             <button type="submit" class="btn btn-primary">Cadastrar</button>

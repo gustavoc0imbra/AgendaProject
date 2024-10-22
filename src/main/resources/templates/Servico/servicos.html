@@ -4,6 +4,11 @@
 </head>
 <body>
 <div th:replace="MenuLayout/menulayout.html :: menu"></div>
+
+<dialog class="w-50 h-25 bg-primary-subtle border-primary rounded" id="modalDeleta">
+    <button id="btnModalDeleta" class="btn btn-danger" type="button">&Chi; Sair</button>
+</dialog>
+
 <div class="container d-flex bg-primary-subtle flex-column my-5">
     <a class="btn btn-primary justify-end w-25 my-2" th:href="@{/servico}">Adicionar Serviço</a>
     <table class="table table-hover my-2">
@@ -22,13 +27,31 @@
             <td th:text="${#numbers.formatDecimal(servico.valor, 2, 2)}"></td>
             <td class="d-flex gap-2 p-2">
                 <a class="btn btn-warning" th:href="@{/servico/{id}(id=${servico.id})}">Editar</a>
-                <a class="btn btn-danger" th:href="@{/servicoDel/{id}(id=${servico.id})}">Excluir</a>
+                <a class="btn btn-danger" onclick="perguntaMensagem()" th:href="@{/servicoDel/{id}(id=${servico.id})}">Excluir</a>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-<div th:replace="MenuLayout/menulayout :: rodape"></div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<footer th:replace="MenuLayout/menulayout :: rodape"></footer>
+<script>
+    const modalDeleta = document.getElementById("modalDeleta");
+    const btnModalDeleta = document.getElementById("btnModalDeleta");
+
+    function perguntaMensagem(event) {
+
+        if(!confirm("Deseja realmente deletar este serviço?")) {
+            event.preventDefault();
+        }
+
+        /*modalDeleta.showModal();*/
+    }
+
+    /*btnModalDeleta.addEventListener("click", () => {
+       modalDeleta.close();
+    });*/
+
+</script>
 </body>
 </html>
