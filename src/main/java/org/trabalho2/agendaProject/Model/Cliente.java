@@ -1,12 +1,8 @@
 package org.trabalho2.agendaProject.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 public class Cliente implements Serializable {
@@ -16,8 +12,6 @@ public class Cliente implements Serializable {
     private String nome;
     private String telefone;
     private String email;
-    @OneToMany
-    private List<Endereco> enderecos;
     public Integer getId() {
         return id;
     }
@@ -41,11 +35,5 @@ public class Cliente implements Serializable {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
     }
 }

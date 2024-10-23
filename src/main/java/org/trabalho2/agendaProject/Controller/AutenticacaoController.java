@@ -31,9 +31,11 @@ public class AutenticacaoController {
             return mostraLogin("Usuário não encontrado");
         }
 
-        ModelAndView mv = new ModelAndView("/Dashboard/dashboard");
+        ModelAndView mv = new ModelAndView("/Dashboard/home");
         mv.addObject("usuario", usuario);
 
         return mv;
     }
+
+
 }
