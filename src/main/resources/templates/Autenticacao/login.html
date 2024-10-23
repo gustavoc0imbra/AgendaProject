@@ -9,21 +9,24 @@
 </head>
 <body>
 <div class="container d-flex flex-column my-5">
-    <form class="bg-dark p-5" th:object="${usuario}" th:action="@{/login}" method="POST">
+    <h1>Agenda Project</h1>
+    <form class="bg-dark p-5" th:action="@{/login}" method="POST">
         <div class="mb-3">
             <label for="user-inpt" class="form-label text-light">Usuário:</label>
-            <input type="text" id="user-inpt" class="form-control" placeholder="Insira o usuario" th:field="*{email}">
+            <input type="text" id="user-inpt" class="form-control" placeholder="Insira o usuario" name="email">
         </div>
         <div class="mb-3">
             <label for="senha-inpt" class="form-label text-light">Senha:</label>
-            <input type="text" id="senha-inpt" class="form-control" placeholder="Insira a senha" th:field="*{senha}">
+            <input type="password" id="senha-inpt" class="form-control" placeholder="Insira a senha" name="senha">
         </div>
+        <p th:if="${mensagem}" class="is-invalid text-danger fw-bold" th:text="${mensagem}"></p>
         <div class="w-100 justify-content-end d-flex gap-2">
             <button type="reset" class="btn btn-danger">Cancelar</button>
             <button type="submit" class="btn btn-primary">Entrar</button>
         </div>
     </form>
 </div>
+<footer th:replace="MenuLayout/menulayout :: rodape"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

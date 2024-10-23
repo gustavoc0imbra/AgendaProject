@@ -19,7 +19,6 @@ public class AutenticacaoController {
     {
         ModelAndView mv = new ModelAndView("/Autenticacao/login");
         mv.addObject("mensagem", mensagem);
-        mv.addObject("usuario", new Usuario());
 
         return mv;
     }
@@ -27,14 +26,11 @@ public class AutenticacaoController {
     @PostMapping("/login")
     public ModelAndView login(Usuario usuario)
     {
-        if(usuarioService.findById(usuario.getId()).isEmpty()) {
-            return mostraLogin("Usuário não encontrado");
+        if(usuarioService.countUsuarioByEmailAndSenha(usuario.getEmail(), usuario.getSenha()) == 0) {
+            return mostraLogin("Usuário não encontrado ou senha inválida!");
         }
 
-        ModelAndView mv = new ModelAndView("/Dashboard/home");
-        mv.addObject("usuario", usuario);
-
-        return mv;
+        return new ModelAndView("Dashboard/home");
     }
 
 
