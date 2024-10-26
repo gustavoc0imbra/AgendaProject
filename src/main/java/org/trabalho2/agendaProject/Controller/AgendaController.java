@@ -3,6 +3,7 @@ package org.trabalho2.agendaProject.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +63,12 @@ public class AgendaController {
     public ModelAndView save(Agenda agenda, BindingResult result)
     {
         if(result.hasErrors()) {
+
+            for (ObjectError error:
+                 result.getAllErrors()) {
+                System.out.println(error.getDefaultMessage());
+            }
+
             return add(agenda);
         }
 

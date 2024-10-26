@@ -7,16 +7,22 @@
 
 <div class="container">
     <form class="my-2 p-5 bg-primary-subtle text-primary-emphasis" th:object="${servico}" th:action="@{/servico}" method="POST">
-        <div class="mb-3">
-            <label for="nomeServico" class="form-label">Nome:</label>
-            <input type="text" class="form-control" id="nomeServico" th:field="*{nome}">
+        <div class="mb-3 row">
+            <div class="col-1">
+                <label for="idServico" class="form-label">Id:</label>
+                <input type="text" class="form-control" id="idServico" th:field="*{id}" readonly>
+            </div>
+            <div class="col">
+                <label for="nomeServico" class="form-label">Nome:</label>
+                <input type="text" class="form-control" id="nomeServico" th:field="*{nome}">
+            </div>
         </div>
         <div class="mb-3">
             <label for="valorServico" class="form-label">Valor:</label>
             <input type="number" class="form-control" id="valorServico" step="0.01" th:field="*{valor}">
         </div>
         <div class="w-100 d-flex justify-content-end gap-2">
-            <button type="reset" class="btn btn-danger">Cancelar</button>
+            <a class="btn btn-danger" th:href="@{/servicos}">Cancelar</a>
             <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>

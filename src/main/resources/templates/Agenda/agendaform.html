@@ -7,13 +7,19 @@
 
 <div class="container">
     <form class="my-2 p-5 bg-primary-subtle text-primary-emphasis" th:object="${agenda}" th:action="@{/agenda}" method="POST">
-        <div class="mb-3">
-            <label for="descrAgenda" class="form-label">Descrição:</label>
-            <input type="text" class="form-control" id="descrAgenda" th:field="*{descricao}">
+        <div class="mb-3 row">
+            <div class="col-1">
+                <label for="idAgenda" class="form-label">Id:</label>
+                <input type="text" class="form-control" id="idAgenda" th:field="*{id}" readonly>
+            </div>
+            <div class="col">
+                <label for="descrAgenda" class="form-label">Descrição:</label>
+                <input type="text" class="form-control" id="descrAgenda" th:field="*{descricao}">
+            </div>
         </div>
         <div class="mb-3">
             <label for="dataAgenda" class="form-label">Data:</label>
-            <input type="date" class="form-control" id="dataAgenda" th:field="*{data}">
+            <input type="datetime-local" class="form-control" id="dataAgenda" th:field="*{data}">
         </div>
         <div class="mb-3">
             <label for="cliAgenda" class="form-label">Cliente:</label>

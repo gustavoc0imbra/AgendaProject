@@ -7,9 +7,15 @@
 
 <div class="container">
     <form class="my-2 p-5 bg-primary-subtle text-primary-emphasis" th:object="${cliente}" th:action="@{/cliente}" method="POST">
-        <div class="mb-3">
-            <label for="nomeCli" class="form-label">Nome:</label>
-            <input type="text" class="form-control" id="nomeCli" th:field="*{nome}">
+        <div class="mb-3 row">
+            <div class="col-1">
+                <label for="idCli" class="form-label">Id:</label>
+                <input type="text" class="form-control" id="idCli" th:field="*{id}" readonly>
+            </div>
+            <div class="col">
+                <label for="nomeCli" class="form-label">Nome:</label>
+                <input type="text" class="form-control" id="nomeCli" th:field="*{nome}">
+            </div>
         </div>
         <div class="mb-3">
             <label for="telefoneCli" class="form-label">Telefone</label>
@@ -49,8 +55,8 @@
 
         </div>
         <div class="w-100 d-flex justify-content-end gap-2">
-            <button type="reset" class="btn btn-danger">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <a th:href="@{/clientes}" class="btn btn-danger">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
 </div>

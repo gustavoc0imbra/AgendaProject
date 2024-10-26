@@ -17,7 +17,7 @@ public class Agenda {
 
     private String descricao;
 
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date data;
 
     @OneToOne
