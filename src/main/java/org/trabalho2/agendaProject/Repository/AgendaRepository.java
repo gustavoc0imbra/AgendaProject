@@ -9,6 +9,6 @@ import java.util.Date;
 
 @Repository
 public interface AgendaRepository extends JpaRepository<Agenda, Integer> {
-    @Query("SELECT count(a) FROM Agenda a where a.data = :data")
-    public int countAgendaByData(Date data);
+    @Query("SELECT count(a) FROM Agenda a WHERE a.funcionario = :funcionario_id AND a.data = :data")
+    public int countAgendaByFuncionarioAndData (Date data, Integer funcionario_id);
 }

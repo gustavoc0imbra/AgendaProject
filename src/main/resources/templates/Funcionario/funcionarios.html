@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="MenuLayout/menulayout :: head">
+</head>
+<body>
+<nav th:replace="MenuLayout/menulayout :: menu"></nav>
+<div class="container d-flex bg-primary-subtle flex-column my-5">
+    <a class="btn btn-primary justify-end w-25 my-2" th:href="@{/funcionario}">Adicionar Funcionario</a>
+    <table class="table table-hover my-2">
+        <thead>
+        <tr class="table-dark">
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Salário</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="funcionario : ${funcionarios}">
+            <th scope="row" th:text="${funcionario.id}"></th>
+            <td th:text="${funcionario.nome}"></td>
+            <td th:text="${funcionario.telefone}"></td>
+            <td th:text="${funcionario.email}"></td>
+            <td th:text="${#numbers.formatCurrency(funcionario.salario)}"></td>
+            <td class="d-flex gap-2 p-2">
+                <a class="btn btn-warning" th:href="@{/funcionario/{id}(id=${funcionario.id})}">Editar</a>
+                <a class="btn btn-danger" onclick="confirmDelete()" th:href="@{/funcionarioDel/{id}(id=${funcionario.id})}">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<footer th:replace="MenuLayout/menulayout :: rodape"></footer>
+<script>
+    function confirmDelete(event) {
+        if(!confirm("Deseja realmente excluir este funcionário?")) {
+            event.preventDefault();
+        }
+    }
+</script>
+</body>
+</html>

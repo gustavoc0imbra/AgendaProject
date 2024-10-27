@@ -24,7 +24,7 @@
         <tr th:each="servico : ${servicos}">
             <th scope="row" th:text="${servico.id}"></th>
             <td th:text="${servico.nome}"></td>
-            <td th:text="${#numbers.formatDecimal(servico.valor, 2, 2)}"></td>
+            <td th:text="${#numbers.formatCurrency(servico.valor)}"></td>
             <td class="d-flex gap-2 p-2">
                 <a class="btn btn-warning" th:href="@{/servico/{id}(id=${servico.id})}">Editar</a>
                 <a class="btn btn-danger" onclick="perguntaMensagem()" th:href="@{/servicoDel/{id}(id=${servico.id})}">Excluir</a>

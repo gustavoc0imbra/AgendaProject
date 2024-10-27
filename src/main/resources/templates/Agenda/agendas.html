@@ -12,6 +12,7 @@
             <th scope="col">#</th>
             <th scope="col">Descrição</th>
             <th scope="col">Data</th>
+            <th scope="col">Funcionário</th>
             <th scope="col">Cliente</th>
             <th scope="col">Serviço</th>
             <th scope="col">Valor Serviço</th>
@@ -24,9 +25,10 @@
             <th scope="row" th:text="${agenda.id}"></th>
             <td th:text="${agenda.descricao}"></td>
             <td th:text="${#dates.format(agenda.data, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${agenda.funcionario.nome}"></td>
             <td th:text="${agenda.cliente.nome}"></td>
             <td th:text="${agenda.servico.nome}"></td>
-            <td th:text="${#numbers.formatDecimal(agenda.servico.valor, 2, 2)}"></td>
+            <td th:text="${#numbers.formatCurrency(agenda.servico.valor)}"></td>
             <td th:class="${agenda.status ? 'text-success' : 'text-danger'}" th:text="${agenda.status ? 'Realizado' : 'Não Realizado'}"></td>
             <td class="d-flex gap-2 p-2">
                 <a class="btn" th:classappend="${agenda.status ? 'btn-success' : 'btn-warning'}" th:href="@{/agenda/{id}(id=${agenda.id})}" th:text="${agenda.status ? 'Visualizar' : 'Editar'}"></a>

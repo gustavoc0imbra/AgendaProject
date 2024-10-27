@@ -26,6 +26,9 @@ public class Agenda {
 
     private boolean status;
 
+    @ManyToOne
+    private Funcionario funcionario;
+
     public Integer getId() {
         return id;
     }
@@ -73,5 +76,13 @@ public class Agenda {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 }

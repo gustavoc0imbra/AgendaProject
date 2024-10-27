@@ -17,25 +17,38 @@
                 <input type="text" class="form-control" id="descrAgenda" th:field="*{descricao}" th:readonly="${agenda.status}" required>
             </div>
         </div>
-        <div class="mb-3">
-            <label for="dataAgenda" class="form-label">Data:</label>
-            <input type="datetime-local" class="form-control" id="dataAgenda" th:field="*{data}" th:readonly="${agenda.status}" required>
+        <div class="mb-3 row">
+            <div class="col-2">
+                <label for="dataAgenda" class="form-label">Data:</label>
+                <input type="datetime-local" class="form-control" id="dataAgenda" th:field="*{data}" th:readonly="${agenda.status}" required>
+            </div>
+            <div class="col-3">
+                <label for="funcionarioAgenda" class="form-label">Funcionário:</label>
+                <select class="form-select" th:field="*{funcionario}" id="funcionarioAgenda" th:disabled="${agenda.status}" required>
+                    <option value="">Selecione um funcionário.</option>
+                    <option th:each="funcionario : ${funcionarios}" th:text="${funcionario.nome}" th:value="${funcionario.id}">
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="cliAgenda" class="form-label">Cliente:</label>
+                <select class="form-select" th:field="*{cliente}" id="cliAgenda" th:disabled="${agenda.status}" required>
+                    <option value="">Selecione um cliente.</option>
+                    <option th:each="cliente : ${clientes}" th:text="${cliente.nome}" th:value="${cliente.id}">
+                    </option>
+                </select>
+            </div>
+            <div class="col-3">
+                <label for="servicoAgenda" class="form-label">Serviço:</label>
+                <select class="form-select" th:field="*{servico}" id="servicoAgenda" th:disabled="${agenda.status}" required>
+                    <option value="" >Selecione um serviço.</option>
+                    <option th:each="servico : ${servicos}" th:text="${servico.nome}" th:value="${servico.id}">
+                    </option>
+                </select>
+            </div>
         </div>
         <div class="mb-3">
-            <label for="cliAgenda" class="form-label">Cliente:</label>
-            <select class="form-select" th:field="*{cliente}" id="cliAgenda" th:disabled="${agenda.status}" required>
-                <option value="">Selecione um cliente.</option>
-                <option th:each="cliente : ${clientes}" th:text="${cliente.nome}" th:value="${cliente.id}">
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="servicoAgenda" class="form-label">Serviço:</label>
-            <select class="form-select" th:field="*{servico}" id="servicoAgenda" th:disabled="${agenda.status}" required>
-                <option value="" >Selecione um serviço.</option>
-                <option th:each="servico : ${servicos}" th:text="${servico.nome}" th:value="${servico.id}">
-                </option>
-            </select>
+
         </div>
         <div class="mb-3">
             <p class="text-xl text-danger" th:text="${mensagem}"></p>

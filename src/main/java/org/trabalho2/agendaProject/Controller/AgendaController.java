@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.trabalho2.agendaProject.Model.Agenda;
 import org.trabalho2.agendaProject.Service.AgendaService;
 import org.trabalho2.agendaProject.Service.ClienteService;
+import org.trabalho2.agendaProject.Service.FuncionarioService;
 import org.trabalho2.agendaProject.Service.ServicoService;
 
 @Controller
@@ -24,6 +25,9 @@ public class AgendaController {
 
     @Autowired
     private ServicoService servicoService;
+
+    @Autowired
+    private FuncionarioService funcionarioService;
 
     @GetMapping("/agendas")
     public ModelAndView findAll()
@@ -41,6 +45,7 @@ public class AgendaController {
         mv.addObject("agenda", agenda);
         mv.addObject("clientes", clienteService.findAll());
         mv.addObject("servicos", servicoService.findAll());
+        mv.addObject("funcionarios", funcionarioService.findAll());
         mv.addObject("mensagem", mensagem);
 
         return mv;
@@ -73,8 +78,8 @@ public class AgendaController {
         }
 
 
-        if(agenda.getId() == null && agendaService.checaAgendamentoValido(agenda.getData()) != 0) {
-            return add(agenda, "Agendamento inválido, há um cliente já marcado neste horário");
+        if(agenda.getId() == null && agendaService.checaAgendamentoValido(agenda.getData(), agenda.getFuncionario().getId()) != 0) {
+            return add(agenda, "Agendamento inválido, há um cliente já marcado neste horário!");
         }
 
         agendaService.add(agenda);

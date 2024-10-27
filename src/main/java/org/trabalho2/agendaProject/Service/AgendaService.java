@@ -38,7 +38,7 @@ public class AgendaService {
         agendaRepository.deleteById(id);
     }
 
-    public int checaAgendamentoValido(Date data) {
-        return agendaRepository.countAgendaByData(data);
+    public int checaAgendamentoValido(Date data, Integer funcionario_id) {
+        return agendaRepository.countAgendaByFuncionarioAndData(data, funcionario_id);
     }
 }

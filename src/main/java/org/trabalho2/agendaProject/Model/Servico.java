@@ -16,7 +16,7 @@ public class Servico {
     private Integer id;
     private String nome;
     private Double valor;
-    @OneToMany
+    @OneToMany(mappedBy = "servico")
     private List<Agenda> agendamentos;
 
     public Integer getId() {
