@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.trabalho2.agendaProject.Model.Agenda;
 import org.trabalho2.agendaProject.Repository.AgendaRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,10 @@ public class AgendaService {
 
     public Agenda add(Agenda agenda)
     {
+        if(agenda.getId() != null) {
+            agenda.setStatus(false);
+        }
+
         return agendaRepository.saveAndFlush(agenda);
     }
 
@@ -31,5 +36,9 @@ public class AgendaService {
     public void delete(Integer id)
     {
         agendaRepository.deleteById(id);
+    }
+
+    public int checaAgendamentoValido(Date data) {
+        return agendaRepository.countAgendaByData(data);
     }
 }

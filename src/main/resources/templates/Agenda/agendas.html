@@ -15,6 +15,7 @@
             <th scope="col">Cliente</th>
             <th scope="col">Serviço</th>
             <th scope="col">Valor Serviço</th>
+            <th scope="col">Status</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -26,9 +27,10 @@
             <td th:text="${agenda.cliente.nome}"></td>
             <td th:text="${agenda.servico.nome}"></td>
             <td th:text="${#numbers.formatDecimal(agenda.servico.valor, 2, 2)}"></td>
+            <td th:class="${agenda.status ? 'text-success' : 'text-danger'}" th:text="${agenda.status ? 'Realizado' : 'Não Realizado'}"></td>
             <td class="d-flex gap-2 p-2">
-                <a class="btn btn-warning" th:href="@{/agenda/{id}(id=${agenda.id})}">Editar</a>
-                <a class="btn btn-danger" th:href="@{/agendaDel/{id}(id=${agenda.id})}">Excluir</a>
+                <a class="btn" th:classappend="${agenda.status ? 'btn-success' : 'btn-warning'}" th:href="@{/agenda/{id}(id=${agenda.id})}" th:text="${agenda.status ? 'Visualizar' : 'Editar'}"></a>
+                <a class="btn btn-danger" th:if="${!agenda.status}" th:href="@{/agendaDel/{id}(id=${agenda.id})}">Excluir</a>
             </td>
         </tr>
         </tbody>

@@ -3,9 +3,11 @@ package org.trabalho2.agendaProject.Model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 import java.lang.Integer;
 import java.lang.Double;
+import java.util.List;
 
 @Entity
 public class Servico {
@@ -14,8 +16,8 @@ public class Servico {
     private Integer id;
     private String nome;
     private Double valor;
-
-    // Getters e Setters
+    @OneToMany
+    private List<Agenda> agendamentos;
 
     public Integer getId() {
         return id;
@@ -39,5 +41,13 @@ public class Servico {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public List<Agenda> getAgendamentos() {
+        return agendamentos;
+    }
+
+    public void setAgendamentos(List<Agenda> agendamentos) {
+        this.agendamentos = agendamentos;
     }
 }

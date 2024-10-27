@@ -35,12 +35,13 @@ public class AgendaController {
     }
 
     @GetMapping("/agenda")
-    public ModelAndView add(Agenda agenda)
+    public ModelAndView add(Agenda agenda, String mensagem)
     {
         ModelAndView mv = new ModelAndView("Agenda/agendaform");
         mv.addObject("agenda", agenda);
         mv.addObject("clientes", clienteService.findAll());
         mv.addObject("servicos", servicoService.findAll());
+        mv.addObject("mensagem", mensagem);
 
         return mv;
     }
@@ -48,7 +49,7 @@ public class AgendaController {
     @GetMapping("/agenda/{id}")
     public ModelAndView edit(@PathVariable("id") Integer id)
     {
-        return add(agendaService.findById(id).get());
+        return add(agendaService.findById(id).get(), "");
     }
 
     @GetMapping("/agendaDel/{id}")
@@ -64,12 +65,16 @@ public class AgendaController {
     {
         if(result.hasErrors()) {
 
-            for (ObjectError error:
-                 result.getAllErrors()) {
+            for (ObjectError error: result.getAllErrors()) {
                 System.out.println(error.getDefaultMessage());
             }
 
-            return add(agenda);
+            return add(agenda, "Erro ao tentar salvar.");
+        }
+
+
+        if(agenda.getId() == null && agendaService.checaAgendamentoValido(agenda.getData()) != 0) {
+            return add(agenda, "Agendamento inválido, há um cliente já marcado neste horário");
         }
 
         agendaService.add(agenda);

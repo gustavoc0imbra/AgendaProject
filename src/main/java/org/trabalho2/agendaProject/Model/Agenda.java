@@ -1,10 +1,8 @@
 package org.trabalho2.agendaProject.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import org.hibernate.annotations.processing.Pattern;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -20,11 +18,13 @@ public class Agenda {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date data;
 
-    @OneToOne
+    @ManyToOne
     private Cliente cliente;
 
-    @OneToOne
+    @ManyToOne
     private Servico servico;
+
+    private boolean status;
 
     public Integer getId() {
         return id;
@@ -65,5 +65,13 @@ public class Agenda {
 
     public void setServico(Servico servico) {
         this.servico = servico;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
