@@ -78,7 +78,7 @@ public class AgendaController {
         }
 
 
-        if(agenda.getId() == null && agendaService.checaAgendamentoValido(agenda.getData(), agenda.getFuncionario().getId()) != 0) {
+        if(agenda.getId() == null && agendaService.checaAgendamentoValido(agenda.getData()) != 0) {
             return add(agenda, "Agendamento inválido, há um cliente já marcado neste horário!");
         }
 
