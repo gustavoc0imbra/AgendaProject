@@ -7,11 +7,22 @@
 <div class="container">
     <form class="my-2 p-5 bg-primary-subtle text-primary-emphasis" th:object="${usuario}" th:action="@{/usuario}" method="POST">
         <div class="mb-3 row">
+            <div class="col-1">
+                <label for="idUsuario" class="form-label">Id:</label>
+                <input type="text" class="form-control" id="idUsuario" th:field="*{id}" readonly>
+            </div>
             <div class="col-2">
                 <label for="dtCadastroUsuario" class="form-label">Data de cadastro:</label>
                 <input type="date" class="form-control" id="dtCadastroUsuario" th:field="*{dtCadastro}" disabled>
             </div>
-            <div class="col-8">
+            <div class="col-3">
+                <label for="tipoAcesso" class="form-label">Tipo Acesso:</label>
+                <select class="form-select" th:field="*{tipoAcesso}" id="tipoAcesso" required>
+                    <option value="">Selecione um tipo de acesso.</option>
+                    <option th:each="tipoAcesso : ${tiposAcesso}" th:text="${tipoAcesso.descricao}" th:value="${tipoAcesso.id}"></option>
+                </select>
+            </div>
+            <div class="col">
                 <label for="emailUsuario" class="form-label">Email:</label>
                 <input type="email" class="form-control" id="emailUsuario" th:field="*{email}" required>
             </div>

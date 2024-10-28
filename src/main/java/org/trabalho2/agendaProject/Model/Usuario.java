@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Usuario {
@@ -21,6 +22,9 @@ public class Usuario {
 
     @OneToOne
     private TipoAcesso tipoAcesso;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Agenda> agendas;
 
     public Integer getId() {
         return id;
@@ -60,5 +64,13 @@ public class Usuario {
 
     public void setTipoAcesso(TipoAcesso tipoAcesso) {
         this.tipoAcesso = tipoAcesso;
+    }
+
+    public List<Agenda> getAgendas() {
+        return agendas;
+    }
+
+    public void setAgendas(List<Agenda> agendas) {
+        this.agendas = agendas;
     }
 }

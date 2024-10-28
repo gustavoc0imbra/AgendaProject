@@ -29,6 +29,9 @@ public class Agenda {
     @ManyToOne
     private Funcionario funcionario;
 
+    @ManyToOne
+    private Usuario usuario;
+
     public Integer getId() {
         return id;
     }
@@ -84,5 +87,13 @@ public class Agenda {
 
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

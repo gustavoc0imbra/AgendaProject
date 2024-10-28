@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import org.trabalho2.agendaProject.Model.Agenda;
 import org.trabalho2.agendaProject.Service.AgendaService;
 import org.trabalho2.agendaProject.Service.ClienteService;
@@ -65,6 +66,20 @@ public class AgendaController {
         return findAll();
     }
 
+    @GetMapping("/atualizaServico/{id}")
+    public RedirectView finalizaServico(@PathVariable("id") Integer id)
+    {
+        Agenda agenda = agendaService.findById(id).get();
+
+        System.out.println("antes: " + agenda.getStatus());
+
+        agenda.setStatus(!agenda.getStatus());
+        System.out.println("dps: " + agenda.getStatus());
+        agendaService.add(agenda);
+
+        return new RedirectView("/agendas");
+    }
+
     @PostMapping("/agenda")
     public ModelAndView save(Agenda agenda, BindingResult result)
     {
@@ -81,6 +96,10 @@ public class AgendaController {
         if(agenda.getId() == null && agendaService.checaAgendamentoValido(agenda.getData()) != 0) {
             return add(agenda, "Agendamento inválido, há um cliente já marcado neste horário!");
         }
+
+        /*if(agenda.getId() == null) {
+            agenda.setUsuario();
+        }*/
 
         agendaService.add(agenda);
 

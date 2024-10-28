@@ -21,7 +21,7 @@ public class AgendaService {
 
     public Agenda add(Agenda agenda)
     {
-        if(agenda.getId() != null) {
+        if(agenda.getId() == null) {
             agenda.setStatus(false);
         }
 
@@ -41,4 +41,5 @@ public class AgendaService {
     public int checaAgendamentoValido(Date data) {
         return agendaRepository.countAgendaByData(data);
     }
+
 }
