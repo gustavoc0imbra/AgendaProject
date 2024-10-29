@@ -71,10 +71,8 @@ public class AgendaController {
     {
         Agenda agenda = agendaService.findById(id).get();
 
-        System.out.println("antes: " + agenda.getStatus());
-
         agenda.setStatus(!agenda.getStatus());
-        System.out.println("dps: " + agenda.getStatus());
+        
         agendaService.add(agenda);
 
         return new RedirectView("/agendas");
