@@ -1,9 +1,6 @@
 package org.trabalho2.agendaProject.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -23,7 +20,4 @@ public class Endereco {
     private String localidade;
     private String uf;
     private String estado;
-    @OneToOne
-    private Cliente cliente;
-
 }

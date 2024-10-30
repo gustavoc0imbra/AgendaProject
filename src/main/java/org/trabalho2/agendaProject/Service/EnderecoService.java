@@ -28,12 +28,9 @@ public class EnderecoService {
         return enderecoRepository.findAll();
     }
 
-    public Endereco add(String cep, Integer id)
+    public Endereco add(Endereco endereco)
     {
-        Endereco endereco = buscarCep(cep).block();
-        Cliente cliente = clienteService.findById(id).get();
-        endereco.setCliente(cliente);
-        return enderecoRepository.save(endereco);
+        return enderecoRepository.saveAndFlush(endereco);
     }
 
     public Optional<Endereco> findOne(Integer id)

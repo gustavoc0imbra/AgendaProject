@@ -1,11 +1,13 @@
 package org.trabalho2.agendaProject.Model;
 
 import jakarta.persistence.*;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@ToString
 public class Cliente implements Serializable {
     @Id
     @GeneratedValue
@@ -14,7 +16,7 @@ public class Cliente implements Serializable {
     private String telefone;
     private String email;
 
-    @OneToOne(mappedBy = "cliente")
+    @OneToOne
     private Endereco endereco;
 
     @OneToMany(mappedBy = "cliente")
@@ -43,6 +45,14 @@ public class Cliente implements Serializable {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public List<Agenda> getAgendamentos() {

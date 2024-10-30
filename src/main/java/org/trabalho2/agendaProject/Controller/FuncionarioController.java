@@ -6,7 +6,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.trabalho2.agendaProject.Model.Endereco;
 import org.trabalho2.agendaProject.Model.Funcionario;
+import org.trabalho2.agendaProject.Service.EnderecoService;
 import org.trabalho2.agendaProject.Service.FuncionarioService;
 
 import java.util.List;
@@ -18,6 +20,9 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
 
+    @Autowired
+    private EnderecoService enderecoService;
+
     @GetMapping("/funcionarios")
     public ModelAndView findAll() {
         ModelAndView mv = new ModelAndView("/Funcionario/funcionarios");
@@ -28,6 +33,7 @@ public class FuncionarioController {
 
     @GetMapping("/funcionario")
     public ModelAndView add(Funcionario funcionario) {
+
         ModelAndView mv = new ModelAndView("Funcionario/funcionarioform");
         mv.addObject("funcionario", funcionario);
 
@@ -50,7 +56,7 @@ public class FuncionarioController {
 
             return add(funcionario);
         }
-
+        funcionario.setEndereco(enderecoService.add(funcionario.getEndereco()));
         funcionarioService.save(funcionario);
 
         return findAll();
