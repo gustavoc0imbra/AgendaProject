@@ -6,6 +6,7 @@ import org.trabalho2.agendaProject.Helper.Codificador;
 import org.trabalho2.agendaProject.Model.Usuario;
 import org.trabalho2.agendaProject.Repository.UsuarioRepository;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,7 @@ public class UsuarioService {
     public Usuario add(Usuario usuario)
     {
         if(usuario.getDtCadastro() == null) {
-            usuario.setDtCadastro(new Date());
+            usuario.setDtCadastro(LocalDateTime.now());
         }
 
         if(usuario.getSenha() == null) {
@@ -41,11 +42,6 @@ public class UsuarioService {
     public void delete(Integer id)
     {
         usuarioRepository.deleteById(id);
-    }
-
-    public int countUsuarioByEmailAndSenha(String email, String senha)
-    {
-        return usuarioRepository.countUsuarioByEmailAndSenha(email, Codificador.criptografaPalavra(senha));
     }
 
 }
