@@ -14,6 +14,9 @@ public class Cliente implements Serializable {
     private String telefone;
     private String email;
 
+    @OneToOne(mappedBy = "cliente")
+    private Endereco endereco;
+
     @OneToMany(mappedBy = "cliente")
     private List<Agenda> agendamentos;
 

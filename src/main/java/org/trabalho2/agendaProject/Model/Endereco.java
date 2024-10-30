@@ -20,8 +20,6 @@ public class Endereco implements Serializable {
     private String cidade;
     private int numero;
     private String complemento;
-    @OneToOne
-    private Cliente cliente;
 
     public Integer getId() {
         return id;
