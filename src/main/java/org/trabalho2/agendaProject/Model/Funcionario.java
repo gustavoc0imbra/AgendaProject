@@ -17,9 +17,8 @@ public class Funcionario {
 
     private String email;
 
-    /*@OneToOne
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;*/
+    @OneToOne
+    private Endereco endereco;
 
     private Double salario;
 
@@ -58,13 +57,13 @@ public class Funcionario {
         this.email = email;
     }
 
-    /*public Endereco getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
-    }*/
+    }
 
     public Double getSalario() {
         return salario;

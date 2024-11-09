@@ -23,7 +23,6 @@
             <td th:text="${cliente.telefone}"></td>
             <td th:text="${cliente.email}"></td>
             <td class="d-flex gap-2 p-2">
-                <a class="btn btn-success" th:href="@{/cliente/enderecos/{id}(id=${cliente.id})}">Endereços</a>
                 <a class="btn btn-warning" th:href="@{/cliente/{id}(id=${cliente.id})}">Editar</a>
                 <a class="btn btn-danger" onclick="confirmDelete()" th:href="@{/clienteDel/{id}(id=${cliente.id})}">Excluir</a>
             </td>

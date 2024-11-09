@@ -5,8 +5,15 @@
 <body>
 <div th:replace="MenuLayout/menulayout.html :: menu"></div>
 
+<dialog id="modal" class="rounded border">
+    <div class="w-auto d-flex justify-content-center align-items-center">
+        <h5>Aguarde um momento...</h5>
+    </div>
+</dialog>
+
 <div class="container">
     <form class="my-2 p-5 bg-primary-subtle text-primary-emphasis" th:object="${funcionario}" th:action="@{/funcionario}" method="POST">
+        <h2 th:text="${funcionario.id != null ? 'Editar Funcionário' : 'Adicionar Funcionário'}"></h2>
         <div class="mb-3 row">
             <div class="col-1">
                 <label for="idFuncionario" class="form-label">Id:</label>
@@ -33,30 +40,38 @@
         </div>
         <div class="mb-3 row g-3 my-3">
             <h3 class="form-label">Endereço:</h3>
-
+            <input type="hidden" th:field="*{endereco.id}">
             <div class="col-2">
                 <label for="cepFuncionario" class="form-label">C.E.P:</label>
-                <input type="number" class="form-control" id="cepFuncionario">
+                <input type="number" class="form-control" id="cepFuncionario" th:field="*{endereco.cep}">
             </div>
             <div class="col-1">
                 <label for="ufFuncionario" class="form-label">UF:</label>
-                <input type="text" class="form-control" id="ufFuncionario">
+                <input type="text" class="form-control" id="ufFuncionario" th:field="*{endereco.uf}">
             </div>
             <div class="col-3">
                 <label for="estadoFuncionario" class="form-label">Estado:</label>
-                <input type="text" class="form-control" id="estadoFuncionario">
+                <input type="text" class="form-control" id="estadoFuncionario" th:field="*{endereco.estado}">
             </div>
             <div class="col-6">
                 <label for="cidadeFuncionario" class="form-label">Cidade:</label>
-                <input type="text" class="form-control" id="cidadeFuncionario">
+                <input type="text" class="form-control" id="cidadeFuncionario" th:field="*{endereco.localidade}">
             </div>
             <div class="col-1">
                 <label for="nroFuncionario" class="form-label">Número:</label>
-                <input type="text" class="form-control" id="nroFuncionario">
+                <input type="text" class="form-control" id="nroFuncionario" th:field="*{endereco.numero}">
             </div>
-            <div class="col-md-6">
+            <div class="col-2">
+                <label for="bairroFuncionario" class="form-label">Bairro:</label>
+                <input type="text" class="form-control" id="bairroFuncionario" th:field="*{endereco.bairro}">
+            </div>
+            <div class="col-3">
                 <label for="ruaFuncionario" class="form-label">Rua:</label>
-                <input type="text" class="form-control" id="ruaFuncionario">
+                <input type="text" class="form-control" id="ruaFuncionario" th:field="*{endereco.logradouro}">
+            </div>
+            <div class="col">
+                <label for="complementoFuncionario" class="form-label">Complemento:</label>
+                <input type="text" class="form-control" id="complementoFuncionario" th:field="*{endereco.complemento}">
             </div>
 
         </div>
@@ -74,29 +89,47 @@
     const ufInput = document.getElementById("ufFuncionario");
     const estadoInput = document.getElementById("estadoFuncionario");
     const cidadeInput = document.getElementById("cidadeFuncionario");
+    const bairroInput = document.getElementById("bairroFuncionario");
     const ruaInput = document.getElementById("ruaFuncionario");
+
+    const modal = document.getElementById("modal");
 
     cepInput.addEventListener("change", function (event) {
         event.preventDefault();
 
-        if(this.value.length === 8) {
-            fetch(`https://viacep.com.br/ws/${this.value}/json/`)
-                .then((result) => {
-                    const json = result.json();
-
-                    json.then((r) => {
-                        console.log(r)
-                        ufInput.value = r.uf;
-                        estadoInput.value = r.estado;
-                        cidadeInput.value = r.localidade;
-                        ruaInput.value = r.logradouro;
-                    })
-                })
-                .catch((err) => {
-                    console.error(err)
-                });
+        if(this.value.length !== 8) {
+            cepInput.value = "";
+            return alert('Favor informar um CEP válido de 8 dígitos.');
         }
+
+        consultaCep();
     });
+
+    async function consultaCep() {
+        modal.showModal();
+
+        try {
+            const response = await fetch(`/cep/${cepInput.value}`, {
+                method: 'GET',
+            });
+
+            const result = await response.json();
+
+            if(!result.uf) {
+                return alert('CEP não encontrado.');
+            }
+
+            ufInput.value = result.uf;
+            estadoInput.value = result.estado;
+            cidadeInput.value = result.localidade;
+            bairroInput.value = result.bairro;
+            ruaInput.value = result.logradouro;
+        }catch (e) {
+            console.error(e);
+        }finally {
+            modal.close();
+        }
+    }
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
