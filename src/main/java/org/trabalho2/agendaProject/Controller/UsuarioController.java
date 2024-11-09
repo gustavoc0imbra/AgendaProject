@@ -7,17 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.trabalho2.agendaProject.Enum.TipoAcessoEnum;
 import org.trabalho2.agendaProject.Model.Usuario;
-import org.trabalho2.agendaProject.Service.TipoAcessoService;
 import org.trabalho2.agendaProject.Service.UsuarioService;
 
 @Controller
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
-
-    @Autowired
-    private TipoAcessoService tipoAcessoService;
 
     @GetMapping("/usuarios")
     public ModelAndView findAll()
@@ -32,7 +29,7 @@ public class UsuarioController {
     public ModelAndView add(Usuario usuario)
     {
         ModelAndView mv = new ModelAndView("/Usuario/usuarioform");
-        mv.addObject("tiposAcesso", tipoAcessoService.findAll());
+        mv.addObject("tiposAcesso", TipoAcessoEnum.values());
         mv.addObject("usuario", usuario);
 
         return mv;

@@ -1,37 +1,58 @@
 package org.trabalho2.agendaProject.Controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.trabalho2.agendaProject.DTO.AuthenticacaoDTO;
+import org.trabalho2.agendaProject.DTO.LoginResponseDTO;
+import org.trabalho2.agendaProject.DTO.RegisterDTO;
+import org.trabalho2.agendaProject.Infra.Security.TokenService;
 import org.trabalho2.agendaProject.Model.Usuario;
+import org.trabalho2.agendaProject.Repository.UsuarioRepository;
 import org.trabalho2.agendaProject.Service.UsuarioService;
 
+import java.time.LocalDateTime;
+
 @Controller
+@RequestMapping("login")
 public class AutenticacaoController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private AuthenticationManager authenticationManager;
 
-    @GetMapping("/")
-    public ModelAndView mostraLogin(String mensagem)
-    {
-        ModelAndView mv = new ModelAndView("/Autenticacao/login");
-        mv.addObject("mensagem", mensagem);
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
-        return mv;
+    @Autowired
+    private TokenService tokenService;
+
+    @PostMapping
+    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticacaoDTO authenticacaoDTO){
+        var usernamePassword = new UsernamePasswordAuthenticationToken(authenticacaoDTO.email(), authenticacaoDTO.senha());
+        var auth = authenticationManager.authenticate(usernamePassword);
+
+        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
-    @PostMapping("/login")
-    public ModelAndView login(Usuario usuario)
-    {
-        if(usuarioService.countUsuarioByEmailAndSenha(usuario.getEmail(), usuario.getSenha()) == 0) {
-            return mostraLogin("Usuário não encontrado ou senha inválida!");
-        }
+    @PostMapping("/register")
+    public ResponseEntity register(@RequestBody @Valid RegisterDTO registerDTO){
+        if (this.usuarioRepository.findByEmail(registerDTO.email()) != null) return ResponseEntity.badRequest().build();
 
-        return new ModelAndView("Dashboard/home");
+        String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.senha());
+
+        Usuario newUser = new Usuario(null, registerDTO.email(), encryptedPassword, LocalDateTime.now(),
+                registerDTO.tipoAcesso(), null);
+
+        this.usuarioRepository.save(newUser);
+        return ResponseEntity.ok().build();
     }
-
-
 }

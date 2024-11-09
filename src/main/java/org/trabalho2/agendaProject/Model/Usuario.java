@@ -1,76 +1,71 @@
 package org.trabalho2.agendaProject.Model;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.trabalho2.agendaProject.Enum.TipoAcessoEnum;
 
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue
     private Integer id;
-
     private String email;
-
     private String senha;
-
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private Date dtCadastro;
-
-    @OneToOne
-    private TipoAcesso tipoAcesso;
+    private LocalDateTime dtCadastro;
+    private TipoAcessoEnum tipoAcesso;
 
     @OneToMany(mappedBy = "usuario")
     private List<Agenda> agendas;
 
-    public Integer getId() {
-        return id;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.tipoAcesso == TipoAcessoEnum.ADMNISTRADOR){
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        }else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
+    @Override
+    public String getPassword() {
         return senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    @Override
+    public String getUsername() {
+        return email;
     }
 
-    public Date getDtCadastro() {
-        return dtCadastro;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setDtCadastro(Date dtCadastro) {
-        this.dtCadastro = dtCadastro;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public TipoAcesso getTipoAcesso() {
-        return tipoAcesso;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public void setTipoAcesso(TipoAcesso tipoAcesso) {
-        this.tipoAcesso = tipoAcesso;
-    }
-
-    public List<Agenda> getAgendas() {
-        return agendas;
-    }
-
-    public void setAgendas(List<Agenda> agendas) {
-        this.agendas = agendas;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
