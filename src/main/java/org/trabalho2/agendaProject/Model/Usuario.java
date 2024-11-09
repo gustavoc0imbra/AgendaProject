@@ -13,12 +13,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Entity
 public class Usuario implements UserDetails {
 
     @Id
@@ -28,15 +27,14 @@ public class Usuario implements UserDetails {
     private String senha;
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime dtCadastro;
+    private TipoAcessoEnum tipoAcesso;
 
-    @OneToOne
-    private TipoAcesso tipoAcesso;
     @OneToMany(mappedBy = "usuario")
     private List<Agenda> agendas;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.tipoAcesso.getTipoAcessoEnum() == TipoAcessoEnum.ADMNISTRADOR){
+        if (this.tipoAcesso == TipoAcessoEnum.ADMNISTRADOR){
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         }else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }

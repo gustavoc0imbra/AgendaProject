@@ -5,10 +5,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.trabalho2.agendaProject.Model.Cliente;
 import org.trabalho2.agendaProject.Repository.UsuarioRepository;
 
 @Service
-public class AuthorizationService implements UserDetailsService {
+public class AutenticacaoService implements UserDetailsService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
