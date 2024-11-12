@@ -1,5 +1,6 @@
 package org.trabalho2.agendaProject.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -50,11 +51,17 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuario")
-    public ModelAndView save(Usuario usuario, BindingResult result)
+    public ModelAndView save(Usuario usuario, BindingResult result, HttpSession session)
     {
         if(result.hasErrors())
         {
             return add(usuario);
+        }
+        Usuario usuarioform = (Usuario) session.getAttribute("usuariologado");
+
+        if(usuarioform.getEmail().equals(usuario.getEmail())) {
+            session.removeAttribute("usuariologado");
+            session.setAttribute("usuariologado", usuario);
         }
 
         usuarioService.add(usuario);

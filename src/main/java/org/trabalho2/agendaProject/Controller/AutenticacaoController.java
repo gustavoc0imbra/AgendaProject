@@ -37,6 +37,15 @@ public class AutenticacaoController {
         return mv;
     }
 
+    @GetMapping("/meuperfil")
+    public ModelAndView editPerfil(HttpSession session)
+    {
+        ModelAndView mv = new ModelAndView("Usuario/usuarioperfil");
+        mv.addObject("usuario", (Usuario) session.getAttribute("usuariologado"));
+
+        return mv;
+    }
+
     @PostMapping("/login")
     public ModelAndView login(Usuario usuario, BindingResult result, HttpSession session){
 
