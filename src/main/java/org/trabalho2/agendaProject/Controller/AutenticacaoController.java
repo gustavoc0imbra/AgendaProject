@@ -23,14 +23,13 @@ import java.net.http.HttpClient;
 import java.time.LocalDateTime;
 
 @Controller
-@RequestMapping("login")
 public class AutenticacaoController {
 
     @Autowired
     private AutenticacaoService autenticacaoService;
 
 
-    @GetMapping
+    @GetMapping("/")
     public ModelAndView showLogin(String mensagem) {
         ModelAndView mv = new ModelAndView("/Autenticacao/login");
         mv.addObject("mensagem", mensagem);
@@ -38,7 +37,7 @@ public class AutenticacaoController {
         return mv;
     }
 
-    @PostMapping
+    @PostMapping("/login")
     public ModelAndView login(Usuario usuario, BindingResult result, HttpSession session){
 
         if(result.hasErrors()) {
