@@ -19,11 +19,11 @@ public class UsuarioService {
     public Usuario add(Usuario usuario)
     {
         if(usuario.getDtCadastro() == null) {
-            usuario.setDtCadastro(LocalDateTime.now());
+            usuario.setDtCadastro(new Date());
         }
 
         if(usuario.getSenha() == null) {
-            usuario.setSenha(Codificador.criptografaPalavra("123"));
+            usuario.setSenha("123");
         }
 
         return usuarioRepository.save(usuario);

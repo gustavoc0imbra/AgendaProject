@@ -1,23 +1,25 @@
 package org.trabalho2.agendaProject.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import org.trabalho2.agendaProject.DTO.AuthenticacaoDTO;
-import org.trabalho2.agendaProject.DTO.LoginResponseDTO;
 import org.trabalho2.agendaProject.DTO.RegisterDTO;
-import org.trabalho2.agendaProject.Infra.Security.TokenService;
 import org.trabalho2.agendaProject.Model.Usuario;
 import org.trabalho2.agendaProject.Repository.UsuarioRepository;
-import org.trabalho2.agendaProject.Service.UsuarioService;
+import org.trabalho2.agendaProject.Service.AutenticacaoService;
 
+import java.net.http.HttpClient;
 import java.time.LocalDateTime;
 
 @Controller
@@ -25,34 +27,42 @@ import java.time.LocalDateTime;
 public class AutenticacaoController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AutenticacaoService autenticacaoService;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private TokenService tokenService;
+    @GetMapping
+    public ModelAndView showLogin(String mensagem) {
+        ModelAndView mv = new ModelAndView("/Autenticacao/login");
+        mv.addObject("mensagem", mensagem);
+
+        return mv;
+    }
 
     @PostMapping
-    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticacaoDTO authenticacaoDTO){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(authenticacaoDTO.email(), authenticacaoDTO.senha());
-        var auth = authenticationManager.authenticate(usernamePassword);
+    public ModelAndView login(Usuario usuario, BindingResult result, HttpSession session){
 
-        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+        if(result.hasErrors()) {
+            showLogin("Erro: Captar informações!");
+        }
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        Usuario usuarioLogin = autenticacaoService.login(usuario.getEmail(), usuario.getSenha());
+
+        if(usuarioLogin == null) {
+            return showLogin("Erro: Credênciais inválidas!");
+        }
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("Dashboard/home");
+
+        session.setAttribute("usuariologado", usuarioLogin);
+
+        return mv;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO registerDTO){
-        if (this.usuarioRepository.findByEmail(registerDTO.email()) != null) return ResponseEntity.badRequest().build();
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.senha());
-
-        Usuario newUser = new Usuario(null, registerDTO.email(), encryptedPassword, LocalDateTime.now(),
-                registerDTO.tipoAcesso(), null);
-
-        this.usuarioRepository.save(newUser);
-        return ResponseEntity.ok().build();
+    @PostMapping("/logout")
+    public ModelAndView logout(HttpSession session) {
+        session.invalidate();
+        return showLogin(null);
     }
+
 }

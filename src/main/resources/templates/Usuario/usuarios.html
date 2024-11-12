@@ -6,7 +6,7 @@
 <div th:replace="MenuLayout/menulayout :: menu"></div>
 <div class="container d-flex bg-primary-subtle flex-column my-5">
     <a class="btn btn-primary justify-end w-25 my-2" th:href="@{/usuario}">Adicionar Usuário</a>
-    <a class="btn btn-primary justify-end w-25 my-2" th:href="@{/tipoacesso}">Adicionar Tipo Usuário</a>
+    <!--<a class="btn btn-primary justify-end w-25 my-2" th:href="@{/tipoacesso}">Adicionar Tipo Usuário</a>-->
     <table class="table table-hover my-2">
         <thead>
         <tr class="table-dark">
@@ -22,7 +22,7 @@
             <th scope="row" th:text="${usuario.id}"></th>
             <td th:text="${usuario.email}"></td>
             <td th:text="${#dates.format(usuario.dtCadastro, 'dd/MM/yyyy')}"></td>
-            <td th:text="${usuario.tipoAcesso.descricao}"></td>
+            <td th:text="${usuario.tipoAcesso}"></td>
             <td class="d-flex gap-2 p-2">
                 <a class="btn btn-warning" th:href="@{/usuario/{id}(id=${usuario.id})}">Editar</a>
                 <a class="btn btn-danger" th:href="@{/usuarioDel/{id}(id=${usuario.id})}">Excluir</a>

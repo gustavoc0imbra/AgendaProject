@@ -19,7 +19,7 @@
                 <label for="tipoAcesso" class="form-label">Tipo Acesso:</label>
                 <select class="form-select" th:field="*{tipoAcesso}" id="tipoAcesso" required>
                     <option value="">Selecione um tipo de acesso.</option>
-                    <option th:each="tipoAcesso : ${tiposAcesso}" th:text="${tipoAcesso.descricao}" th:value="${tipoAcesso.id}"></option>
+                    <option th:each="tipoAcesso : ${tiposAcesso}" th:text="${tipoAcesso}" th:value="${tipoAcesso}"></option>
                 </select>
             </div>
             <div class="col">

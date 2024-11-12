@@ -1,21 +1,37 @@
 package org.trabalho2.agendaProject.Service;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.trabalho2.agendaProject.Model.Cliente;
+import org.trabalho2.agendaProject.Enum.TipoAcessoEnum;
+import org.trabalho2.agendaProject.Model.Usuario;
 import org.trabalho2.agendaProject.Repository.UsuarioRepository;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Service
-public class AutenticacaoService implements UserDetailsService {
+public class AutenticacaoService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return usuarioRepository.findByEmail(email);
+    @PostConstruct
+    public void seedDb() {
+        if(usuarioRepository.count() == 0) {
+            Usuario usuario = new Usuario();
+
+            usuario.setEmail("admin");
+            usuario.setSenha("admin123");
+            usuario.setDtCadastro(new Date());
+            usuario.setTipoAcesso(TipoAcessoEnum.ADMIN);
+
+            usuarioRepository.saveAndFlush(usuario);
+        }
+    }
+
+    public Usuario login(String email, String senha)
+    {
+        return usuarioRepository.findByEmailAndAndSenha(email, senha);
     }
 }

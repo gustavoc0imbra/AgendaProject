@@ -19,7 +19,7 @@
             <label for="senha-inpt" class="form-label text-light">Senha:</label>
             <input type="password" id="senha-inpt" class="form-control" placeholder="Insira a senha" name="senha">
         </div>
-        <p th:if="${mensagem}" class="is-invalid text-danger fw-bold" th:text="${mensagem}"></p>
+        <div th:if="${mensagem}" th:text="${mensagem}" class="alert alert-danger"></div>
         <div class="w-100 justify-content-end d-flex gap-2">
             <button type="reset" class="btn btn-danger">Cancelar</button>
             <button type="submit" class="btn btn-primary">Entrar</button>
